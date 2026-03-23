@@ -95,11 +95,10 @@ Without middleware, users will appear logged out after their JWT expires (~1 hou
 
 ## Auth in This Course
 
-| Step | Topic |
-|------|-------|
-| [01_auth-google](./01_auth-google/) | Full Google OAuth integration with Next.js |
-
-More auth methods (email/password, magic links) will be added as separate step folders.
+| # | Sub-chapter | Topic |
+|---|-------------|-------|
+| 01 | [01_auth-google](./01_auth-google/) | Full Google OAuth integration with Next.js |
+| 02 | 02_magic-link/ | Email-based passwordless login with Magic Links (coming soon) |
 
 ---
 
