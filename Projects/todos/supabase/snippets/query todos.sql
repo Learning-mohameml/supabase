@@ -1,0 +1,1 @@
+select title , priority , completed from todos;

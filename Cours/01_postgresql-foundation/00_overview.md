@@ -26,3 +26,60 @@ Build a solid PostgreSQL foundation by working directly with the database via `p
 | 11 | Extensions | Done | Essential | [11_extensions.md](./11_extensions.md) |
 
 > **Skipped sections** (07, 08, 10) can be revisited in Phase 2 or when needed. They are not blocking for Supabase development.
+
+
+## SQL Cheat Sheet
+
+
+### DDL — Data Definition Language
+
+| Command  | Description            | Example                            |
+| -------- | ---------------------- | ---------------------------------- |
+| CREATE   | Create database/table  | `CREATE TABLE users (id INT);`     |
+| ALTER    | Modify structure       | `ALTER TABLE users ADD name TEXT;` |
+| DROP     | Delete table/database  | `DROP TABLE users;`                |
+| TRUNCATE | Delete all rows (fast) | `TRUNCATE TABLE users;`            |
+
+### DML — Data Manipulation Language
+
+| Command | Description | Example                         |
+| ------- | ----------- | ------------------------------- |
+| INSERT  | Add data    | `INSERT INTO users VALUES (1);` |
+| UPDATE  | Modify data | `UPDATE users SET name='Ali';`  |
+| DELETE  | Remove data | `DELETE FROM users WHERE id=1;` |
+
+
+### DQL — Data Query Language
+
+| Command | Description | Example                |
+| ------- | ----------- | ---------------------- |
+| SELECT  | Read data   | `SELECT * FROM users;` |
+
+
+
+### DCL — Data Control Language
+
+| Command | Description        | Example                              |
+| ------- | ------------------ | ------------------------------------ |
+| GRANT   | Give permissions   | `GRANT SELECT ON users TO user1;`    |
+| REVOKE  | Remove permissions | `REVOKE SELECT ON users FROM user1;` |
+
+
+### TCL — Transaction Control Language
+
+| Command  | Description       | Example     |
+| -------- | ----------------- | ----------- |
+| BEGIN    | Start transaction | `BEGIN;`    |
+| COMMIT   | Save changes      | `COMMIT;`   |
+| ROLLBACK | Undo changes      | `ROLLBACK;` |
+
+
+### Pro tip 
+
+Quand tu codes un backend :
+
+* endpoints CRUD → **DML + DQL**
+* migrations → **DDL**
+* sécurité → **DCL**
+* logique critique (finance) → **TCL**
+
