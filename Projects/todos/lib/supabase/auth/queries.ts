@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server"
+import { createClient } from "@/lib/supabase/clients/server"
 import type { User } from "@supabase/supabase-js"
 
 export async function getUser(): Promise<User | null> {

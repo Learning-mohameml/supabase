@@ -49,9 +49,9 @@ When the user asks for a feature, **generate the UI** but **describe the DB/Supa
 
 ### Supabase Client
 
-- Browser client: `utils/supabase/client.ts`
-- Server client: `utils/supabase/server.ts`
-- Middleware/proxy: `proxy.ts` for token refresh
+- Browser client: `lib/supabase/clients/client.ts`
+- Server client: `lib/supabase/clients/server.ts`
+- Middleware/proxy: `proxy.ts` imports from `lib/supabase/clients/middleware.ts`
 - Always use `getUser()` on the server, never trust `getSession()` alone
 - Use generated types from `supabase gen types typescript`
 
@@ -61,8 +61,15 @@ When the user asks for a feature, **generate the UI** but **describe the DB/Supa
 todos/
 ├── app/                    # Next.js App Router pages and layouts
 ├── components/             # Shared UI components
-├── utils/supabase/         # Supabase client utilities
-├── supabase/
+├── lib/
+│   ├── supabase/           # All Supabase app code
+│   │   ├── clients/        # Client factories (server, browser, middleware)
+│   │   ├── auth/           # Auth domain (queries, client-side auth)
+│   │   ├── todos/          # Todos domain (queries, actions)
+│   │   └── categories/     # Categories domain (queries)
+│   └── utils.ts            # Generic utilities (cn(), etc.)
+├── types/                  # TypeScript types (generated + helpers)
+├── supabase/               # Supabase CLI (migrations, seeds, config)
 │   ├── migrations/         # SQL migration files
 │   ├── seed.sql            # Test data
 │   └── config.toml         # Supabase local config

@@ -1,6 +1,6 @@
 'use client'
 
-import { signInWithGoogle } from '@/lib/auth/client'
+import { signInWithGoogle } from '@/lib/supabase/auth/client'
 
 export default function LoginPage() {
   const handleLogin = async () => {

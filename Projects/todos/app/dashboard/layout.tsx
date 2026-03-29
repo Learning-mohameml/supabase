@@ -1,4 +1,4 @@
-import { getUser } from "@/lib/auth/queries"
+import { getUser } from "@/lib/supabase/auth/queries"
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import { Separator } from "@/components/ui/separator"

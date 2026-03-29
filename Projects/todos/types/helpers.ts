@@ -21,3 +21,33 @@ export type TodoWithRelations = Todo & {
   categories: Category | null;
   todo_tags: (TodoTag & { tags: Tag })[];
 };
+
+export type CreateTodoInput = {
+  title: string;
+  description: string;
+  priority: number;
+  category_id: string | null;
+  due_date: string | null;
+};
+
+export type UpdateTodoInput = {
+  title: string;
+  description: string | null;
+  priority: number;
+  category_id: string | null;
+  due_date: string | null;
+  metadata: Record<string, unknown>;
+};
+
+
+  export type CreateCategoryInput = {
+    name: string
+    color: string
+    icon: string | null
+  }
+
+  export type UpdateCategoryInput = {
+    name: string
+    color: string
+    icon: string | null
+  }

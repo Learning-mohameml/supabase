@@ -34,9 +34,14 @@ export function AppSidebar({ userEmail }: { userEmail: string | undefined }) {
   return (
     <Sidebar>
       <SidebarHeader>
-        <div className="flex items-center gap-2 px-2 py-1">
-          <CheckSquare className="size-5" />
-          <span className="text-lg font-semibold">Todos</span>
+        <div className="flex items-center gap-2.5 px-2 py-2">
+          <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <CheckSquare className="size-4" />
+          </div>
+          <div>
+            <span className="text-sm font-semibold leading-none">Todos</span>
+            <p className="text-[11px] text-muted-foreground leading-none mt-1">Task Manager</p>
+          </div>
         </div>
       </SidebarHeader>
 

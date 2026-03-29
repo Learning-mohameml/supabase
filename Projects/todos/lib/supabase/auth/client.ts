@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/client"
+import { createClient } from "@/lib/supabase/clients/client"
 
 export async function signInWithGoogle() {
     const supabase = createClient()

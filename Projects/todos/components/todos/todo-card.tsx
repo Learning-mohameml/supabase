@@ -4,6 +4,7 @@ import { format } from "date-fns"
 import { Calendar, MoreVertical, Trash2 } from "lucide-react"
 import Link from "next/link"
 import { toast } from "sonner"
+import { cn } from "@/lib/utils"
 import type { TodoWithRelations } from "@/types/helpers"
 import type { ActionResult } from "@/types/actions"
 import { Badge } from "@/components/ui/badge"
@@ -31,6 +32,25 @@ const priorityColors: Record<number, string> = {
   3: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
 }
 
+const priorityBorderColors: Record<number, string> = {
+  1: "#3b82f6",
+  2: "#f59e0b",
+  3: "#ef4444",
+}
+
+function getRelativeDueDate(dueDate: string): { text: string; className: string } {
+  const now = new Date()
+  const due = new Date(dueDate)
+  const diffMs = due.getTime() - now.getTime()
+  const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24))
+
+  if (diffDays < 0) return { text: "Overdue", className: "text-red-600 dark:text-red-400 font-medium" }
+  if (diffDays === 0) return { text: "Due today", className: "text-amber-600 dark:text-amber-400 font-medium" }
+  if (diffDays === 1) return { text: "Tomorrow", className: "text-amber-600 dark:text-amber-400" }
+  if (diffDays <= 7) return { text: `${diffDays}d left`, className: "text-muted-foreground" }
+  return { text: format(due, "MMM d"), className: "text-muted-foreground" }
+}
+
 export function TodoCard({
   todo,
   onToggleComplete,
@@ -41,7 +61,14 @@ export function TodoCard({
   onDelete: (id: string) => Promise<ActionResult>
 }) {
   return (
-    <Card className={todo.completed ? "opacity-60" : ""}>
+    <Card
+      className={cn(
+        "transition-opacity",
+        todo.priority > 0 && "border-l-4",
+        todo.completed && "opacity-50",
+      )}
+      style={todo.priority > 0 ? { borderLeftColor: priorityBorderColors[todo.priority] } : undefined}
+    >
       <CardHeader className="flex flex-row items-start gap-3 space-y-0 pb-2">
         <Checkbox
           checked={todo.completed}
@@ -56,7 +83,7 @@ export function TodoCard({
             href={`/dashboard/todo/${todo.id}`}
             className="font-medium hover:underline leading-tight"
           >
-            <span className={todo.completed ? "line-through" : ""}>
+            <span className={todo.completed ? "line-through text-muted-foreground" : ""}>
               {todo.title}
             </span>
           </Link>
@@ -106,12 +133,15 @@ export function TodoCard({
               {tags.name}
             </Badge>
           ))}
-          {todo.due_date && (
-            <span className="flex items-center gap-1 text-xs text-muted-foreground ml-auto">
-              <Calendar className="size-3" />
-              {format(new Date(todo.due_date), "MMM d")}
-            </span>
-          )}
+          {todo.due_date && (() => {
+            const due = getRelativeDueDate(todo.due_date)
+            return (
+              <span className={cn("flex items-center gap-1 text-xs ml-auto", due.className)}>
+                <Calendar className="size-3" />
+                {due.text}
+              </span>
+            )
+          })()}
         </div>
       </CardContent>
     </Card>

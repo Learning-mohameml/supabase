@@ -82,18 +82,18 @@ Build the todos dashboard with full CRUD. Claude generates UI components; user i
 
 ### Phase D — Todo Detail Page
 
-- [ ] **D1.** Create detail page UI *(Claude generates)*
+- [x] **D1.** Create detail page UI *(Claude generates)*
   - `app/dashboard/todo/[id]/page.tsx` — Server Component shell
   - `components/todos/todo-detail.tsx` — full view: all fields, editable
   - `components/todos/todo-edit-form.tsx` — edit form: title, description, priority, category, due date, metadata (JSON editor)
   - `components/todos/tag-picker.tsx` — add/remove tags from a todo
 
-- [ ] **D2.** Implement data fetching *(user)*
+- [x] **D2.** Implement data fetching *(user)*
   - Fetch single todo by ID with category + tags (`.eq('id', id).single()`)
   - Fetch all categories (for the category dropdown)
   - Fetch all tags (for the tag picker)
 
-- [ ] **D3.** Implement todo edit *(user)*
+- [x] **D3.** Implement todo edit *(user)*
   - Update todo: `.update({...}).eq('id', id)`
   - Add tag: `.insert({ todo_id, tag_id })` into `todo_tags`
   - Remove tag: `.delete().eq('todo_id', id).eq('tag_id', tagId)` from `todo_tags`
@@ -102,16 +102,17 @@ Build the todos dashboard with full CRUD. Claude generates UI components; user i
 
 ### Phase E — Categories Page
 
-- [ ] **E1.** Create categories page UI *(Claude generates)*
+- [x] **E1.** Create categories page UI *(Claude generates)*
   - `app/dashboard/categories/page.tsx` — Server Component shell
   - `components/categories/category-list.tsx` — list with todo count per category
   - `components/categories/category-card.tsx` — name, color dot, icon, todo count
   - `components/categories/add-category-dialog.tsx` — form: name, color picker, icon
+  - `components/categories/edit-category-dialog.tsx` — edit form (pre-filled)
 
-- [ ] **E2.** Implement data fetching *(user)*
+- [x] **E2.** Implement data fetching *(user)*
   - Fetch categories with todo count: `.select('*, todos(count)')`
 
-- [ ] **E3.** Implement category actions *(user)*
+- [x] **E3.** Implement category actions *(user)*
   - Add category: `.insert({...})`
   - Edit category: `.update({...}).eq('id', id)`
   - Delete category: `.delete().eq('id', id)` (todos get `category_id = null` via ON DELETE SET NULL)

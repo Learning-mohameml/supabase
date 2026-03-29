@@ -1,1 +1,2 @@
-select title , priority , completed from todos;
+select * from categories; 
+-- select * from todos;

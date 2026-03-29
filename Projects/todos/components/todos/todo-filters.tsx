@@ -31,7 +31,22 @@ export function TodoFilters({
         onValueChange={(v) => v && onFiltersChange({ ...filters, category: v })}
       >
         <SelectTrigger className="w-[160px]">
-          <SelectValue placeholder="Category" />
+          <SelectValue placeholder="Category">
+            {(value: string) => {
+              if (value === "all") return "All categories"
+              const cat = categories.find((c) => c.id === value)
+              if (!cat) return "Category"
+              return (
+                <span className="flex items-center gap-2">
+                  <span
+                    className="inline-block size-2 rounded-full"
+                    style={{ backgroundColor: cat.color }}
+                  />
+                  {cat.name}
+                </span>
+              )
+            }}
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All categories</SelectItem>
@@ -54,7 +69,12 @@ export function TodoFilters({
         onValueChange={(v) => v && onFiltersChange({ ...filters, priority: v })}
       >
         <SelectTrigger className="w-[140px]">
-          <SelectValue placeholder="Priority" />
+          <SelectValue placeholder="Priority">
+            {(value: string) => {
+              const labels: Record<string, string> = { all: "All priorities", "3": "High", "2": "Medium", "1": "Low", "0": "None" }
+              return labels[value] ?? "Priority"
+            }}
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All priorities</SelectItem>
@@ -70,7 +90,12 @@ export function TodoFilters({
         onValueChange={(v) => v && onFiltersChange({ ...filters, status: v })}
       >
         <SelectTrigger className="w-[140px]">
-          <SelectValue placeholder="Status" />
+          <SelectValue placeholder="Status">
+            {(value: string) => {
+              const labels: Record<string, string> = { all: "All", active: "Active", completed: "Completed" }
+              return labels[value] ?? "Status"
+            }}
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All</SelectItem>
