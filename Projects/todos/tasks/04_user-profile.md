@@ -22,13 +22,13 @@ Add a profile page where users can view their Google account info, edit their di
 
 > **Learning goal:** Understand the difference between anon key (public, RLS-scoped) and service role key (private, bypasses RLS). The admin API needs the service role key.
 
-- [ ] **A1.** Get the service role key:
+- [x] **A1.** Get the service role key:
   ```bash
   supabase status
   ```
   Look for `service_role key`.
 
-- [ ] **A2.** Add to `.env.local` (server-only, no `NEXT_PUBLIC_` prefix):
+- [x] **A2.** Add to `.env.local` (server-only, no `NEXT_PUBLIC_` prefix):
   ```env
   SUPABASE_SERVICE_ROLE_KEY=<your-service-role-key>
   ```
@@ -39,7 +39,7 @@ Add a profile page where users can view their Google account info, edit their di
 
 > **Learning goal:** Use `supabase.auth.updateUser()` to modify user metadata, and `supabase.auth.admin.deleteUser()` with the service role key for account deletion.
 
-- [ ] **B1.** Create `lib/supabase/auth/actions.ts` with two server actions:
+- [x] **B1.** Create `lib/supabase/auth/actions.ts` with two server actions:
 
   **`updateProfile(data)`** — updates the user's display name:
   - Call `supabase.auth.updateUser({ data: { display_name: data.display_name } })`
@@ -52,7 +52,7 @@ Add a profile page where users can view their Google account info, edit their di
   - Create an admin client: `createClient(SUPABASE_URL, SERVICE_ROLE_KEY)` from `@supabase/supabase-js`
   - Call `adminClient.auth.admin.deleteUser(user.id)`
 
-- [ ] **B2.** Add `UpdateProfileInput` type to `types/helpers.ts`:
+- [x] **B2.** Add `UpdateProfileInput` type to `types/helpers.ts`:
   ```typescript
   export type UpdateProfileInput = {
     display_name: string
@@ -85,9 +85,9 @@ Add a profile page where users can view their Google account info, edit their di
 
 ### Phase E — Test *(user)*
 
-- [ ] **E1.** Profile page shows Google avatar, email, provider
-- [ ] **E2.** Edit display name → persists after refresh
-- [ ] **E3.** Sidebar shows updated display name
+- [x] **E1.** Profile page shows Google avatar, email, provider
+- [x] **E2.** Edit display name → persists after refresh
+- [x] **E3.** Sidebar shows updated display name
 - [ ] **E4.** Delete account → all data removed, redirected to `/login`
 
 ---
@@ -115,9 +115,9 @@ Add a profile page where users can view their Google account info, edit their di
 
 ## Done Criteria
 
-- [ ] Service role key in `.env.local` (not `NEXT_PUBLIC_`)
-- [ ] `updateProfile()` and `deleteAccount()` server actions working
-- [ ] Profile page shows Google info (avatar, email, name, provider, member since)
-- [ ] Edit display name persists
+- [x] Service role key in `.env.local` (not `NEXT_PUBLIC_`)
+- [x] `updateProfile()` and `deleteAccount()` server actions working
+- [x] Profile page shows Google info (avatar, email, name, provider, member since)
+- [x] Edit display name persists
 - [ ] Delete account removes all user data + auth user
-- [ ] Profile link in sidebar navigation
+- [x] Profile link in sidebar navigation

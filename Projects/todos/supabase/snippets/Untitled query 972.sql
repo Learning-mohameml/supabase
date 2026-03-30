@@ -1,1 +1,1 @@
-select * from todos;
+select * from tags;
