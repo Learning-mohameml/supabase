@@ -121,17 +121,19 @@ Build the todos dashboard with full CRUD. Claude generates UI components; user i
 
 ### Phase F — Tags Page
 
-- [ ] **F1.** Create tags page UI *(Claude generates)*
+- [x] **F1.** Create tags page UI *(Claude generates)*
   - `app/dashboard/tags/page.tsx` — Server Component shell
   - `components/tags/tag-list.tsx` — list of tags with usage count
+  - `components/tags/tag-card.tsx` — single tag card with color dot, todo count, edit/delete
   - `components/tags/add-tag-dialog.tsx` — form: name, color picker
+  - `components/tags/edit-tag-dialog.tsx` — edit form (pre-filled)
 
-- [ ] **F2.** Implement data fetching *(user)*
+- [x] **F2.** Implement data fetching *(user)*
   - Fetch tags with todo count: `.select('*, todo_tags(count)')`
 
-- [ ] **F3.** Implement tag actions *(user)*
+- [x] **F3.** Implement tag actions *(user)*
   - Add tag: `.insert({...})`
-  - Edit tag (upsert): `.upsert({...}, { onConflict: 'name, user_id' })`
+  - Edit tag: `.update({...}).eq('id', id)`
   - Delete tag: `.delete().eq('id', id)` (cascades via `todo_tags`)
 
 ---

@@ -51,3 +51,13 @@ export type UpdateTodoInput = {
     color: string
     icon: string | null
   }
+
+  export type CreateTagInput = {
+    name: string
+    color: string
+  }
+
+  export type UpdateTagInput = {
+    name: string
+    color: string
+  }

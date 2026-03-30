@@ -12,3 +12,19 @@ export async function getTags() : Promise<Tag[]> {
 
     return data as Tag[];
 }
+
+type TagWithTodoCount = Tag & {
+    todo_tags: { count: number }[]
+}
+
+export async function getTagsWithTodoCount(): Promise<TagWithTodoCount[]> {
+    const supabase = await createClient()
+    const { data, error } = await supabase
+        .from("tags")
+        .select("*, todo_tags(count)")
+        .order("name")
+
+    if (error) throw new Error(error.message)
+
+    return data
+}
