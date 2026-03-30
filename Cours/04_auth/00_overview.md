@@ -100,6 +100,21 @@ Without middleware, users will appear logged out after their JWT expires (~1 hou
 | 01 | [01_auth-google](./01_auth-google/) | Full Google OAuth integration with Next.js |
 | 02 | 02_magic-link/ | Email-based passwordless login with Magic Links (coming soon) |
 
+### Sections in 01_auth-google
+
+| # | Section | Topic |
+|---|---------|-------|
+| 00 | [Concepts](./01_auth-google/00_concepts.md) | OAuth, PKCE, sessions, two redirects, sequence diagram, URL reference |
+| 01 | [Setup Project](./01_auth-google/01_setup-project.md) | Create Next.js app, install Supabase packages |
+| 02 | [Supabase + Google Config](./01_auth-google/02_supabase-google-config.md) | Google Cloud Console, enable provider, redirect URLs |
+| 03 | [Env & Clients](./01_auth-google/03_env-and-clients.md) | `.env.local`, browser + server clients |
+| 04 | [Callback Route](./01_auth-google/04_callback-route.md) | Exchange code for session, PKCE, error handling |
+| 05 | [Login Page](./01_auth-google/05_login-page.md) | `signInWithOAuth`, Client Component, `redirectTo` |
+| 06 | [Middleware / Proxy](./01_auth-google/06_middleware.md) | Token refresh, route protection, `getUser()` |
+| 07 | [Protected Pages](./01_auth-google/07_protected-pages.md) | Home page, logout button, Server Component pattern |
+| 08 | [Security Best Practices](./01_auth-google/08_security-best-practices.md) | Open redirect, JWT forgery, cookie security, checklist |
+| 09 | [Local Auth Setup](./01_auth-google/09_local-auth-setup.md) | `config.toml`, local Google OAuth, `supabase/.env`, troubleshooting |
+
 ---
 
 ## Key Security Principles

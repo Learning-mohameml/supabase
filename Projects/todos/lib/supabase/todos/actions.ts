@@ -5,9 +5,7 @@ import { createClient } from "@/lib/supabase/clients/server"
 import { ok, fail, type ActionResult } from "@/types/actions"
 import type { Json } from "@/types/database.types"
 import type { CreateTodoInput, UpdateTodoInput } from "@/types/helpers"
-
-// Hardcoded user_id until Auth (Chapter 04) replaces it with auth.uid()
-const USER_ID = "aaaaaaaa-0000-0000-0000-000000000001"
+import { getUser } from "@/lib/supabase/auth/queries"
 
 export async function toggleTodoComplete(
     id: string,
@@ -42,8 +40,10 @@ export async function softDeleteTodo(id: string): Promise<ActionResult> {
 }
 
 export async function addTodo(data: CreateTodoInput): Promise<ActionResult> {
-
     const supabase = await createClient()
+    const user = await getUser()
+    if (!user) return fail("Not authenticated")
+
     const { error } = await supabase
         .from("todos")
         .insert({
@@ -52,7 +52,7 @@ export async function addTodo(data: CreateTodoInput): Promise<ActionResult> {
             priority: data.priority,
             category_id: data.category_id,
             due_date: data.due_date,
-            user_id: USER_ID,
+            user_id: user.id,
         })
 
     if (error) return fail(error.message)

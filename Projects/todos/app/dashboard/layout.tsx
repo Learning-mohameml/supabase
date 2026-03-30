@@ -12,7 +12,10 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <AppSidebar userEmail={user?.email} />
+      <AppSidebar
+        userEmail={user?.email}
+        displayName={user?.user_metadata?.display_name ?? user?.user_metadata?.full_name}
+      />
       <SidebarInset>
         <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />

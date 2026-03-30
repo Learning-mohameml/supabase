@@ -4,18 +4,21 @@ import { revalidatePath } from "next/cache"
 import { createClient } from "@/lib/supabase/clients/server"
 import { ok, fail, type ActionResult } from "@/types/actions"
 import type { CreateTagInput, UpdateTagInput } from "@/types/helpers"
+import { getUser } from "../auth/queries"
 
-// Hardcoded user_id until Auth (Chapter 04) replaces it with auth.uid()
-const USER_ID = "aaaaaaaa-0000-0000-0000-000000000001"
 
 export async function addTag(data: CreateTagInput): Promise<ActionResult> {
     const supabase = await createClient()
+    const user = await getUser();
+
+    if (!user) return fail("Not authenticated")
+
     const { error } = await supabase
         .from("tags")
         .insert({
             name: data.name,
             color: data.color,
-            user_id: USER_ID,
+            user_id: user.id,
         })
 
     if (error) return fail(error.message)

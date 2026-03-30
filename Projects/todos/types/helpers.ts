@@ -40,24 +40,30 @@ export type UpdateTodoInput = {
 };
 
 
-  export type CreateCategoryInput = {
-    name: string
-    color: string
-    icon: string | null
-  }
+export type CreateCategoryInput = {
+  name: string
+  color: string
+  icon: string | null
+}
 
-  export type UpdateCategoryInput = {
-    name: string
-    color: string
-    icon: string | null
-  }
+export type UpdateCategoryInput = {
+  name: string
+  color: string
+  icon: string | null
+}
 
-  export type CreateTagInput = {
-    name: string
-    color: string
-  }
+export type CreateTagInput = {
+  name: string
+  color: string
+}
 
-  export type UpdateTagInput = {
-    name: string
-    color: string
-  }
+
+export type UpdateTagInput = {
+  name: string
+  color: string
+  
+}
+
+export type UpdateProfileInput = {
+  display_name: string
+}

@@ -1,11 +1,16 @@
 import { createClient } from "@/lib/supabase/clients/server"
 import type { Category } from "@/types/helpers"
+import { getUser } from "@/lib/supabase/auth/queries"
 
 export async function getCategories(): Promise<Category[]> {
     const supabase = await createClient()
+    const user = await getUser()
+    if (!user) return []
+
     const { data, error } = await supabase
         .from("categories")
         .select("*")
+        .eq("user_id", user.id)
         .order("name")
 
     if (error) throw new Error(error.message)
@@ -17,14 +22,17 @@ type CategoryWithTodoCount = Category & {
 }
 
 export async function getCategoriesWithTodoCount() : Promise<CategoryWithTodoCount[]> {
-
     const supabase = await createClient()
+    const user = await getUser()
+    if (!user) return []
+
     const {data , error} = await supabase
         .from("categories")
         .select("* , todos(count)")
-        .is("todos.deleted_at" , null);
-    
-    if(error) throw new Error(error.message);
+        .eq("user_id", user.id)
+        .is("todos.deleted_at" , null)
 
-    return data;
+    if(error) throw new Error(error.message)
+
+    return data
 }

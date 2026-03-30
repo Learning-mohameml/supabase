@@ -6,6 +6,7 @@ import {
   CheckSquare,
   FolderOpen,
   Tags,
+  UserCircle,
 } from "lucide-react"
 import {
   Sidebar,
@@ -26,9 +27,10 @@ const navItems = [
   { title: "Todos", href: "/dashboard", icon: CheckSquare },
   { title: "Categories", href: "/dashboard/categories", icon: FolderOpen },
   { title: "Tags", href: "/dashboard/tags", icon: Tags },
+  { title: "Profile", href: "/dashboard/profile", icon: UserCircle },
 ]
 
-export function AppSidebar({ userEmail }: { userEmail: string | undefined }) {
+export function AppSidebar({ userEmail, displayName }: { userEmail: string | undefined; displayName: string | undefined }) {
   const pathname = usePathname()
 
   return (
@@ -78,11 +80,16 @@ export function AppSidebar({ userEmail }: { userEmail: string | undefined }) {
 
       <SidebarFooter>
         <SidebarSeparator />
-        {userEmail && (
-          <p className="truncate px-2 text-xs text-muted-foreground">
-            {userEmail}
-          </p>
-        )}
+        <div className="px-2">
+          {displayName && (
+            <p className="truncate text-sm font-medium">{displayName}</p>
+          )}
+          {userEmail && (
+            <p className="truncate text-xs text-muted-foreground">
+              {userEmail}
+            </p>
+          )}
+        </div>
         <LogoutButton />
       </SidebarFooter>
     </Sidebar>

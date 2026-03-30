@@ -5,6 +5,7 @@ export async function signInWithGoogle() {
     await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
+            // redriect 2 : supabase -- to --> server Next js 
             redirectTo: `${window.location.origin}/auth/callback`,
         },
     })
