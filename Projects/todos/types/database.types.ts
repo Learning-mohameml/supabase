@@ -179,6 +179,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      delete_user: { Args: never; Returns: undefined }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
     }
@@ -316,3 +317,4 @@ export const Constants = {
     Enums: {},
   },
 } as const
+

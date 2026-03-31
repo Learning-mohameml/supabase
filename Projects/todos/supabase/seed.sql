@@ -1,59 +1,59 @@
--- Test user UUID (simulates auth.users — in Supabase, real users come from Auth)
--- We use a fixed UUID so all seed data references the same user
-DO $$
-DECLARE
-  test_user_id UUID := 'aaaaaaaa-0000-0000-0000-000000000001';
-BEGIN
-  RAISE NOTICE 'Test user ID: %', test_user_id;
-END $$;
+-- -- Test user UUID (simulates auth.users — in Supabase, real users come from Auth)
+-- -- We use a fixed UUID so all seed data references the same user
+-- DO $$
+-- DECLARE
+--   test_user_id UUID := 'aaaaaaaa-0000-0000-0000-000000000001';
+-- BEGIN
+--   RAISE NOTICE 'Test user ID: %', test_user_id;
+-- END $$;
 
--- Categories (fixed UUIDs so todos can reference them)
-INSERT INTO categories (id, user_id, name, color)
-VALUES
-  ('bbbbbbbb-0000-0000-0000-000000000001', 'aaaaaaaa-0000-0000-0000-000000000001', 'Work', '#EF4444'),
-  ('bbbbbbbb-0000-0000-0000-000000000002', 'aaaaaaaa-0000-0000-0000-000000000001', 'Personal', '#3B82F6'),
-  ('bbbbbbbb-0000-0000-0000-000000000003', 'aaaaaaaa-0000-0000-0000-000000000001', 'Learning', '#10B981');
+-- -- Categories (fixed UUIDs so todos can reference them)
+-- INSERT INTO categories (id, user_id, name, color)
+-- VALUES
+--   ('bbbbbbbb-0000-0000-0000-000000000001', 'aaaaaaaa-0000-0000-0000-000000000001', 'Work', '#EF4444'),
+--   ('bbbbbbbb-0000-0000-0000-000000000002', 'aaaaaaaa-0000-0000-0000-000000000001', 'Personal', '#3B82F6'),
+--   ('bbbbbbbb-0000-0000-0000-000000000003', 'aaaaaaaa-0000-0000-0000-000000000001', 'Learning', '#10B981');
 
--- Todos (10 rows with varied priorities, due dates, completion, metadata, soft-delete)
-INSERT INTO todos (user_id, category_id, title, description, priority, due_date, completed, metadata, deleted_at)
-VALUES
-  ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000001', 'Finish report', 'Complete Q1 report', 3, NOW() + INTERVAL '1 day', false, '{}', NULL),
-  ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000001', 'Email client', NULL, 2, NOW() + INTERVAL '2 days', false, '{}', NULL),
-  ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000002', 'Gym session', 'Leg day', 1, NULL, false, '{}', NULL),
-  ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000002', 'Buy groceries', NULL, 0, NULL, true, '{}', NULL),
-  ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000003', 'Read book', 'Read 30 pages', 1, NULL, false, '{}', NULL),
-  ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000003', 'Learn PostgreSQL', 'Triggers & indexes', 2, NOW() + INTERVAL '3 days', false, '{"notes": "check docs", "url": "https://supabase.com"}', NULL),
-  ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000001', 'Fix bug', 'Critical API issue', 3, NOW() + INTERVAL '5 hours', false, '{}', NULL),
-  ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000002', 'Call friend', NULL, 0, NULL, true, '{}', NULL),
-  ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000003', 'Start side project', 'Quant tool idea', 2, NULL, false, '{}', NOW()),
-  ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000001', 'Review PR', NULL, 2, NOW() + INTERVAL '1 day', false, '{}', NULL);
+-- -- Todos (10 rows with varied priorities, due dates, completion, metadata, soft-delete)
+-- INSERT INTO todos (user_id, category_id, title, description, priority, due_date, completed, metadata, deleted_at)
+-- VALUES
+--   ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000001', 'Finish report', 'Complete Q1 report', 3, NOW() + INTERVAL '1 day', false, '{}', NULL),
+--   ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000001', 'Email client', NULL, 2, NOW() + INTERVAL '2 days', false, '{}', NULL),
+--   ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000002', 'Gym session', 'Leg day', 1, NULL, false, '{}', NULL),
+--   ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000002', 'Buy groceries', NULL, 0, NULL, true, '{}', NULL),
+--   ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000003', 'Read book', 'Read 30 pages', 1, NULL, false, '{}', NULL),
+--   ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000003', 'Learn PostgreSQL', 'Triggers & indexes', 2, NOW() + INTERVAL '3 days', false, '{"notes": "check docs", "url": "https://supabase.com"}', NULL),
+--   ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000001', 'Fix bug', 'Critical API issue', 3, NOW() + INTERVAL '5 hours', false, '{}', NULL),
+--   ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000002', 'Call friend', NULL, 0, NULL, true, '{}', NULL),
+--   ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000003', 'Start side project', 'Quant tool idea', 2, NULL, false, '{}', NOW()),
+--   ('aaaaaaaa-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000001', 'Review PR', NULL, 2, NOW() + INTERVAL '1 day', false, '{}', NULL);
 
--- Tags (fixed UUIDs for deterministic tag assignments)
-INSERT INTO tags (id, user_id, name)
-VALUES
-  ('cccccccc-0000-0000-0000-000000000001', 'aaaaaaaa-0000-0000-0000-000000000001', 'urgent'),
-  ('cccccccc-0000-0000-0000-000000000002', 'aaaaaaaa-0000-0000-0000-000000000001', 'quick-win'),
-  ('cccccccc-0000-0000-0000-000000000003', 'aaaaaaaa-0000-0000-0000-000000000001', 'blocked'),
-  ('cccccccc-0000-0000-0000-000000000004', 'aaaaaaaa-0000-0000-0000-000000000001', 'review'),
-  ('cccccccc-0000-0000-0000-000000000005', 'aaaaaaaa-0000-0000-0000-000000000001', 'idea');
+-- -- Tags (fixed UUIDs for deterministic tag assignments)
+-- INSERT INTO tags (id, user_id, name)
+-- VALUES
+--   ('cccccccc-0000-0000-0000-000000000001', 'aaaaaaaa-0000-0000-0000-000000000001', 'urgent'),
+--   ('cccccccc-0000-0000-0000-000000000002', 'aaaaaaaa-0000-0000-0000-000000000001', 'quick-win'),
+--   ('cccccccc-0000-0000-0000-000000000003', 'aaaaaaaa-0000-0000-0000-000000000001', 'blocked'),
+--   ('cccccccc-0000-0000-0000-000000000004', 'aaaaaaaa-0000-0000-0000-000000000001', 'review'),
+--   ('cccccccc-0000-0000-0000-000000000005', 'aaaaaaaa-0000-0000-0000-000000000001', 'idea');
 
--- Tag assignments
--- "Finish report" → urgent + blocked
--- "Fix bug" → urgent + review
--- "Buy groceries" → quick-win
--- "Start side project" → idea
--- "Review PR" → review
-INSERT INTO todo_tags (todo_id, tag_id)
-SELECT t.id, 'cccccccc-0000-0000-0000-000000000001'::uuid FROM todos t WHERE t.title = 'Finish report'
-UNION ALL
-SELECT t.id, 'cccccccc-0000-0000-0000-000000000003'::uuid FROM todos t WHERE t.title = 'Finish report'
-UNION ALL
-SELECT t.id, 'cccccccc-0000-0000-0000-000000000001'::uuid FROM todos t WHERE t.title = 'Fix bug'
-UNION ALL
-SELECT t.id, 'cccccccc-0000-0000-0000-000000000004'::uuid FROM todos t WHERE t.title = 'Fix bug'
-UNION ALL
-SELECT t.id, 'cccccccc-0000-0000-0000-000000000002'::uuid FROM todos t WHERE t.title = 'Buy groceries'
-UNION ALL
-SELECT t.id, 'cccccccc-0000-0000-0000-000000000005'::uuid FROM todos t WHERE t.title = 'Start side project'
-UNION ALL
-SELECT t.id, 'cccccccc-0000-0000-0000-000000000004'::uuid FROM todos t WHERE t.title = 'Review PR';
+-- -- Tag assignments
+-- -- "Finish report" → urgent + blocked
+-- -- "Fix bug" → urgent + review
+-- -- "Buy groceries" → quick-win
+-- -- "Start side project" → idea
+-- -- "Review PR" → review
+-- INSERT INTO todo_tags (todo_id, tag_id)
+-- SELECT t.id, 'cccccccc-0000-0000-0000-000000000001'::uuid FROM todos t WHERE t.title = 'Finish report'
+-- UNION ALL
+-- SELECT t.id, 'cccccccc-0000-0000-0000-000000000003'::uuid FROM todos t WHERE t.title = 'Finish report'
+-- UNION ALL
+-- SELECT t.id, 'cccccccc-0000-0000-0000-000000000001'::uuid FROM todos t WHERE t.title = 'Fix bug'
+-- UNION ALL
+-- SELECT t.id, 'cccccccc-0000-0000-0000-000000000004'::uuid FROM todos t WHERE t.title = 'Fix bug'
+-- UNION ALL
+-- SELECT t.id, 'cccccccc-0000-0000-0000-000000000002'::uuid FROM todos t WHERE t.title = 'Buy groceries'
+-- UNION ALL
+-- SELECT t.id, 'cccccccc-0000-0000-0000-000000000005'::uuid FROM todos t WHERE t.title = 'Start side project'
+-- UNION ALL
+-- SELECT t.id, 'cccccccc-0000-0000-0000-000000000004'::uuid FROM todos t WHERE t.title = 'Review PR';

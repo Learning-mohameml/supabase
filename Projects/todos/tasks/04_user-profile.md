@@ -88,7 +88,7 @@ Add a profile page where users can view their Google account info, edit their di
 - [x] **E1.** Profile page shows Google avatar, email, provider
 - [x] **E2.** Edit display name → persists after refresh
 - [x] **E3.** Sidebar shows updated display name
-- [ ] **E4.** Delete account → all data removed, redirected to `/login`
+- [x] **E4.** Delete account → all data removed, redirected to `/login`
 
 ---
 
@@ -119,5 +119,5 @@ Add a profile page where users can view their Google account info, edit their di
 - [x] `updateProfile()` and `deleteAccount()` server actions working
 - [x] Profile page shows Google info (avatar, email, name, provider, member since)
 - [x] Edit display name persists
-- [ ] Delete account removes all user data + auth user
+- [x] Delete account removes all user data + auth user
 - [x] Profile link in sidebar navigation
