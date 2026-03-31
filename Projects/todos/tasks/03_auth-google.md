@@ -28,16 +28,16 @@ Make Google OAuth fully functional with the local Supabase stack. Replace all ha
 
 > **Learning goal:** Understand OAuth credential creation and redirect URI configuration.
 
-- [ ] **A1.** Open [Google Cloud Console](https://console.cloud.google.com), create or open your OAuth 2.0 Client ID
+- [x] **A1.** Open [Google Cloud Console](https://console.cloud.google.com), create or open your OAuth 2.0 Client ID
 
-- [ ] **A2.** In **Authorized redirect URIs**, ensure both URIs are present:
+- [x] **A2.** In **Authorized redirect URIs**, ensure both URIs are present:
   ```
   http://127.0.0.1:54321/auth/v1/callback       ← local Supabase
   https://<your-ref>.supabase.co/auth/v1/callback  ← production Supabase
   ```
   > Why `127.0.0.1` not `localhost`? Google treats them as different origins. Supabase CLI binds to `127.0.0.1`.
 
-- [ ] **A3.** Copy the **Client ID** and **Client Secret**
+- [x] **A3.** Copy the **Client ID** and **Client Secret**
 
 ---
 
@@ -45,21 +45,21 @@ Make Google OAuth fully functional with the local Supabase stack. Replace all ha
 
 > **Learning goal:** How `config.toml` + `env()` + `supabase/.env` configure auth providers locally without committing secrets.
 
-- [ ] **B1.** Create `supabase/.env` with your Google credentials:
+- [x] **B1.** Create `supabase/.env` with your Google credentials:
   ```env
   GOOGLE_CLIENT_ID=123456-xxxxx.apps.googleusercontent.com
   GOOGLE_CLIENT_SECRET=GOCSPX-xxxxxxxxxxxxxx
   ```
 
-- [ ] **B2.** Verify `.gitignore` covers `supabase/.env` (`.env*` on line 34 already matches)
+- [x] **B2.** Verify `.gitignore` covers `supabase/.env` (`.env*` on line 34 already matches)
 
-- [ ] **B3.** Fix `config.toml` line 152 — `additional_redirect_urls`:
+- x ] **B3.** Fix `config.toml` line 152 — `additional_redirect_urls`:
   ```diff
   - additional_redirect_urls = ["https://127.0.0.1:3000"]
   + additional_redirect_urls = ["http://localhost:3000/auth/callback"]
   ```
 
-- [ ] **B4.** Add `[auth.external.google]` to `config.toml` (after the `[auth.external.apple]` block):
+- [x] **B4.** Add `[auth.external.google]` to `config.toml` (after the `[auth.external.apple]` block):
   ```toml
   [auth.external.google]
   enabled = true
@@ -71,12 +71,12 @@ Make Google OAuth fully functional with the local Supabase stack. Replace all ha
   ```
   > `skip_nonce_check = true` is required locally — the auth server doesn't use HTTPS, which breaks OpenID Connect nonce verification.
 
-- [ ] **B5.** Restart the local stack:
+- [x] **B5.** Restart the local stack:
   ```bash
   supabase stop && supabase start
   ```
 
-- [ ] **B6.** Verify in Studio (`http://127.0.0.1:54323`) → Authentication → Providers → Google enabled
+- [x] **B6.** Verify in Studio (`http://127.0.0.1:54323`) → Authentication → Providers → Google enabled
 
 ---
 
@@ -84,7 +84,7 @@ Make Google OAuth fully functional with the local Supabase stack. Replace all ha
 
 > **Learning goal:** How middleware protects routes by checking the session and redirecting unauthenticated users.
 
-- [ ] **C1.** Uncomment lines 38–46 in `lib/supabase/clients/middleware.ts`:
+- [x] **C1.** Uncomment lines 38–46 in `lib/supabase/clients/middleware.ts`:
   ```typescript
   if (
     !user &&
@@ -97,7 +97,7 @@ Make Google OAuth fully functional with the local Supabase stack. Replace all ha
   }
   ```
 
-- [ ] **C2.** Test: incognito → `localhost:3000/dashboard` → should redirect to `/login`
+- [x] **C2.** Test: incognito → `localhost:3000/dashboard` → should redirect to `/login`
 
 ---
 
@@ -120,17 +120,17 @@ Same pattern for each of the 3 files:
 
 **Files:**
 
-- [ ] `lib/supabase/todos/actions.ts` — `addTodo()` (line 55)
-- [ ] `lib/supabase/categories/actions.ts` — `addCategory()` (line 19)
-- [ ] `lib/supabase/tags/actions.ts` — `addTag()` (line 18)
+- [x] `lib/supabase/todos/actions.ts` — `addTodo()` (line 55)
+- [x] `lib/supabase/categories/actions.ts` — `addCategory()` (line 19)
+- [x] `lib/supabase/tags/actions.ts` — `addTag()` (line 18)
 
 #### D2. Update query files
 
 Same pattern for each: import `getUser`, call it, add `.eq("user_id", user.id)` filter.
 
-- [ ] `lib/supabase/todos/queries.ts` — `getTodosWithRelations()` and `getTodoById()`
-- [ ] `lib/supabase/categories/queries.ts` — `getCategories()` and `getCategoriesWithTodoCount()`
-- [ ] `lib/supabase/tags/queries.ts` — `getTags()` and `getTagsWithTodoCount()`
+- [x] `lib/supabase/todos/queries.ts` — `getTodosWithRelations()` and `getTodoById()`
+- [x] `lib/supabase/categories/queries.ts` — `getCategories()` and `getCategoriesWithTodoCount()`
+- [x] `lib/supabase/tags/queries.ts` — `getTags()` and `getTagsWithTodoCount()`
 
 ---
 
@@ -138,7 +138,7 @@ Same pattern for each: import `getUser`, call it, add `.eq("user_id", user.id)` 
 
 > **Learning goal:** Building a polished auth page with shadcn/ui that matches the dashboard aesthetic.
 
-- [ ] **E1.** Redesign `app/login/page.tsx` — centered card, app branding, Google sign-in button with shadcn/ui
+- [x] **E1.** Redesign `app/login/page.tsx` — centered card, app branding, Google sign-in button with shadcn/ui
 
 ---
 
@@ -146,19 +146,19 @@ Same pattern for each: import `getUser`, call it, add `.eq("user_id", user.id)` 
 
 > **Learning goal:** Environment variable names must match exactly what the code reads.
 
-- [ ] **F1.** In `.env.prod`: rename `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY` → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- [x] **F1.** In `.env.prod`: rename `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY` → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ---
 
 ### Phase G — End-to-End Test *(user)*
 
-- [ ] **G1.** Incognito → `localhost:3000` → redirected to `/login`
-- [ ] **G2.** Click "Sign in with Google" → Google login → redirected to `/dashboard`
-- [ ] **G3.** Sidebar shows your Google email
-- [ ] **G4.** Create a todo, category, and tag — all succeed
-- [ ] **G5.** Studio: new records have your Google UUID, not `aaaaaaaa-...`
-- [ ] **G6.** Logout → redirected to `/login`
-- [ ] **G7.** Navigate to `/dashboard` → redirected to `/login`
+- [x] **G1.** Incognito → `localhost:3000` → redirected to `/login`
+- [x] **G2.** Click "Sign in with Google" → Google login → redirected to `/dashboard`
+- [x] **G3.** Sidebar shows your Google email
+- [x] **G4.** Create a todo, category, and tag — all succeed
+- [x] **G5.** Studio: new records have your Google UUID, not `aaaaaaaa-...`
+- [x] **G6.** Logout → redirected to `/login`
+- [x] **G7.** Navigate to `/dashboard` → redirected to `/login`
 
 ---
 
@@ -179,14 +179,14 @@ After auth, seeded data (`user_id = aaaaaaaa-...`) won't appear for the Google u
 
 ## Done Criteria
 
-- [ ] Google provider enabled in `config.toml` with `env()` secrets
-- [ ] `supabase/.env` created (not committed to git)
-- [ ] Middleware redirects unauthenticated users to `/login`
-- [ ] All 3 action files use `getUser()` instead of hardcoded `USER_ID`
-- [ ] All query files filter by authenticated user's `user_id`
-- [ ] Login page restyled with shadcn/ui
-- [ ] `.env.prod` key name fixed
-- [ ] Full OAuth flow works: login → dashboard → create data → logout → redirect
+- [x] Google provider enabled in `config.toml` with `env()` secrets
+- [x] `supabase/.env` created (not committed to git)
+- [x] Middleware redirects unauthenticated users to `/login`
+- [x] All 3 action files use `getUser()` instead of hardcoded `USER_ID`
+- [x] All query files filter by authenticated user's `user_id`
+- [x] Login page restyled with shadcn/ui
+- [x] `.env.prod` key name fixed
+- [x] Full OAuth flow works: login → dashboard → create data → logout → redirect
 
 ---
 

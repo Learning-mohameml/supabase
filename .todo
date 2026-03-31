@@ -1,0 +1,41 @@
+# Remaining TODO
+
+## Chapter 05 — Row Level Security
+- [ ] Write course material (RLS fundamentals, policies, auth context, patterns, testing)
+- [ ] Add RLS migrations to todos app (todos, categories, tags tables)
+- [ ] Test RLS policies locally
+
+## Error Handling : 
+- make a production profosneille error handling 
+- look at todos/tasks/error-handling.md 
+
+## Chapter 06 — Production, CI/CD & DevOps
+- [ ] Write course material (Git workflow, GitHub Actions, environments, CI/CD pipelines)
+- [ ] Add linting & type-check CI pipeline
+- [ ] Add unit tests (Vitest)
+- [ ] Add integration tests (database, API)
+- [ ] Add E2E tests (Playwright)
+- [ ] Add GitHub Actions workflows to todos app
+- [ ] Add migration deploy pipeline (supabase db push on merge)
+- [ ] Add type generation in CI
+- [ ] Add secrets management
+- [ ] Production security hardening checklist
+
+
+
+
+## Deployment
+- [ ] Deploy Supabase project to production (supabase link + db push)
+- [ ] Deploy Next.js app to Vercel
+- [ ] Configure production environment variables
+- [ ] Simulate adding a new feature end-to-end (migration → code → PR → deploy) : by chapter 7 new feat
+
+
+## Chapter 07 — Storage
+- [ ] Write course material (buckets, upload/download, signed URLs, policies)
+- [ ] Add avatar/profile image upload feature to todos app : look at todos/tasks/avatar-upload.md
+- [ ] Add storage RLS policies
+
+
+## Final — Supabase + Next.js Step-by-Step Guide
+- [ ] Write a ready-to-follow checklist: infra local setup, auth, migrations, tables, RLS, storage, CI/CD, deploy 
