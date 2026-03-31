@@ -98,7 +98,7 @@ Without middleware, users will appear logged out after their JWT expires (~1 hou
 | # | Sub-chapter | Topic |
 |---|-------------|-------|
 | 01 | [01_auth-google](./01_auth-google/) | Full Google OAuth integration with Next.js |
-| 02 | 02_magic-link/ | Email-based passwordless login with Magic Links (coming soon) |
+| 02 | [02_magic-link](./02_magic-link/) | Email-based passwordless login with Magic Links |
 
 ### Sections in 01_auth-google
 
@@ -114,6 +114,18 @@ Without middleware, users will appear logged out after their JWT expires (~1 hou
 | 07 | [Protected Pages](./01_auth-google/07_protected-pages.md) | Home page, logout button, Server Component pattern |
 | 08 | [Security Best Practices](./01_auth-google/08_security-best-practices.md) | Open redirect, JWT forgery, cookie security, checklist |
 | 09 | [Local Auth Setup](./01_auth-google/09_local-auth-setup.md) | `config.toml`, local Google OAuth, `supabase/.env`, troubleshooting |
+
+### Sections in 02_magic-link
+
+| # | Section | Topic |
+|---|---------|-------|
+| 00 | [Concepts](./02_magic-link/00_concepts.md) | Magic Link flow, OTP, comparison with OAuth, Inbucket |
+| 01 | [Supabase Config](./02_magic-link/01_supabase-config.md) | Email auth settings, rate limits, SMTP (production) |
+| 02 | [Sign-in Function](./02_magic-link/02_sign-in-function.md) | `signInWithOtp()`, PKCE vs `verifyOtp()`, `emailRedirectTo` |
+| 03 | [Email Templates](./02_magic-link/03_email-templates.md) | Custom email HTML, template variables, sign-up vs sign-in, account linking |
+| 04 | [Login Page](./02_magic-link/04_login-page.md) | Email input, Magic Link button, success state, divider |
+| 05 | [Local Testing](./02_magic-link/05_local-testing.md) | Inbucket, end-to-end flow, edge cases, debugging |
+| 06 | [Security](./02_magic-link/06_security.md) | Rate limiting, token expiry, PKCE, email enumeration |
 
 ---
 
