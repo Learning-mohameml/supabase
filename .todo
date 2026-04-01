@@ -1,9 +1,9 @@
 # Remaining TODO
 
 ## Chapter 05 — Row Level Security
-- [ ] Write course material (RLS fundamentals, policies, auth context, patterns, testing)
-- [ ] Add RLS migrations to todos app (todos, categories, tags tables)
-- [ ] Test RLS policies locally
+- [x] Write course material (RLS fundamentals, policies, auth context, patterns, testing)
+- [x] Add RLS migrations to todos app (todos, categories, tags tables)
+- [x] Test RLS policies locally
 
 ## Error Handling : 
 - make a production profosneille error handling 
