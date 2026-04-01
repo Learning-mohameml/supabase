@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/clients/server"
 import type { TodoWithRelations } from "@/types/helpers"
 import { getUser } from "@/lib/supabase/auth/queries"
+import { toUserMessage, logError } from "@/lib/errors"
 
 export async function getTodosWithRelations(): Promise<TodoWithRelations[]> {
     const supabase = await createClient()
@@ -14,7 +15,10 @@ export async function getTodosWithRelations(): Promise<TodoWithRelations[]> {
         .is("deleted_at", null)
         .order("priority", { ascending: false })
 
-    if (error) throw new Error(error.message)
+    if (error) {
+        logError("getTodosWithRelations", error)
+        throw new Error(toUserMessage(error))
+    }
     return data as TodoWithRelations[]
 
 }
@@ -31,7 +35,10 @@ export async function getTodoById(id: string): Promise<TodoWithRelations | null>
         .eq("user_id", user.id)
         .maybeSingle()
 
-    if (error) throw new Error(error.message)
+    if (error) {
+        logError("getTodoById", error)
+        throw new Error(toUserMessage(error))
+    }
 
     return data as TodoWithRelations | null
 }

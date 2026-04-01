@@ -6,6 +6,7 @@ import { Trash2 } from "lucide-react"
 import { toast } from "sonner"
 import type { ActionResult } from "@/types/actions"
 import { signOut } from "@/lib/supabase/auth/client"
+import { toUserMessage } from "@/lib/errors"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -37,7 +38,11 @@ export function DeleteAccountDialog({
       return
     }
 
-    await signOut()
+    try {
+      await signOut()
+    } catch (error) {
+      toast.error(toUserMessage(error))
+    }
     router.push("/login")
   }
 

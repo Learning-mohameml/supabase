@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/clients/server"
 import type { Category } from "@/types/helpers"
 import { getUser } from "@/lib/supabase/auth/queries"
+import { toUserMessage, logError } from "@/lib/errors"
 
 export async function getCategories(): Promise<Category[]> {
     const supabase = await createClient()
@@ -13,7 +14,10 @@ export async function getCategories(): Promise<Category[]> {
         .eq("user_id", user.id)
         .order("name")
 
-    if (error) throw new Error(error.message)
+    if (error) {
+        logError("getCategories", error)
+        throw new Error(toUserMessage(error))
+    }
     return data
 }
 
@@ -32,7 +36,10 @@ export async function getCategoriesWithTodoCount() : Promise<CategoryWithTodoCou
         .eq("user_id", user.id)
         .is("todos.deleted_at" , null)
 
-    if(error) throw new Error(error.message)
+    if (error) {
+        logError("getCategoriesWithTodoCount", error)
+        throw new Error(toUserMessage(error))
+    }
 
     return data
 }

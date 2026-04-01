@@ -1,28 +1,27 @@
 # Remaining TODO
 
-## Chapter 05 — Row Level Security
+## 1. Chapter 05 — Row Level Security
 - [x] Write course material (RLS fundamentals, policies, auth context, patterns, testing)
 - [x] Add RLS migrations to todos app (todos, categories, tags tables)
 - [x] Test RLS policies locally
 
-## Error Handling : 
+## 2. Error Handling : 
 - make a production profosneille error handling 
-- look at todos/tasks/error-handling.md 
+- look at todos/tasks/07-error-handling.md 
 
-## User Management : 
-- enhance user management by creating an new tables in public schema : profiles
-- profiles use auth.users
-- create a trigger that popultae auto when a user auth 
-- in code we user profile to read/update user prfernces/profile ...etc 
-- we update auth.usees only for things related to auth like email ...etc 
-- make a view that can be public see by another 
 
-## Chapter 06 — Production, CI/CD & DevOps
+## 3. Chapter 06 — Production, CI/CD & DevOps
+
+### 3.1 Cour : 
 - [ ] Write course material (Git workflow, GitHub Actions, environments, CI/CD pipelines)
+
+### 3.2 Testing : 
 - [ ] Add linting & type-check CI pipeline
 - [ ] Add unit tests (Vitest)
 - [ ] Add integration tests (database, API)
 - [ ] Add E2E tests (Playwright)
+
+### 3.4 Automation CI/CS : 
 - [ ] Add GitHub Actions workflows to todos app
 - [ ] Add migration deploy pipeline (supabase db push on merge)
 - [ ] Add type generation in CI
@@ -30,20 +29,33 @@
 - [ ] Production security hardening checklist
 
 
-
-
-## Deployment
+###  3.5 Deployment
 - [ ] Deploy Supabase project to production (supabase link + db push)
 - [ ] Deploy Next.js app to Vercel
 - [ ] Configure production environment variables
 - [ ] Simulate adding a new feature end-to-end (migration → code → PR → deploy) : by chapter 7 new feat
 
 
-## Chapter 07 — Storage
+## 4. User Management : As simulation of new feat  
+- enhance user management by creating an new tables in public schema : profiles
+- profiles use auth.users
+- create a trigger that popultae auto when a user auth 
+- in code we user profile to read/update user prfernces/profile ...etc 
+- we update auth.usees only for things related to auth like email ...etc 
+- make a view that can be public see by another 
+
+
+## 5. Chapter 07 — Storage
 - [ ] Write course material (buckets, upload/download, signed URLs, policies)
 - [ ] Add avatar/profile image upload feature to todos app : look at todos/tasks/avatar-upload.md
 - [ ] Add storage RLS policies
 
 
-## Final — Supabase + Next.js Step-by-Step Guide
+## 6. Final — Supabase + Next.js Step-by-Step Guide
 - [ ] Write a ready-to-follow checklist: infra local setup, auth, migrations, tables, RLS, storage, CI/CD, deploy 
+
+- for example : 
+    - write the migration 
+    - write the CRUD operation 
+    - add the error-handling logic 
+    - add testing 

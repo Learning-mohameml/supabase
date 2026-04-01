@@ -5,37 +5,42 @@ import { getUser } from "@/lib/supabase/auth/queries"
 import { createClient } from "@/lib/supabase/clients/server"
 import { fail, ok, type ActionResult } from "@/types/actions"
 import type { UpdateProfileInput } from "@/types/helpers"
+import { toUserMessage, logError, withErrorHandling } from "@/lib/errors"
 
-export async function updateProfile(
-  data: UpdateProfileInput
-): Promise<ActionResult> {
-  const user = await getUser()
-  if (!user) return fail("Not authenticated")
+export const updateProfile = withErrorHandling("updateProfile", async (data: UpdateProfileInput) => {
+    const user = await getUser()
+    if (!user) return fail("Please sign in to continue.")
 
-  const displayName = data.display_name.trim()
-  if (!displayName) return fail("Display name is required")
+    const displayName = data.display_name.trim()
+    if (!displayName) return fail("Display name is required")
 
-  const supabase = await createClient()
-  const { error } = await supabase.auth.updateUser({
-    data: { display_name: displayName },
-  })
+    const supabase = await createClient()
+    const { error } = await supabase.auth.updateUser({
+        data: { display_name: displayName },
+    })
 
-  if (error) return fail(error.message)
+    if (error) {
+        logError("updateProfile", error)
+        return fail(toUserMessage(error))
+    }
 
-  revalidatePath("/dashboard")
-  revalidatePath("/dashboard/profile")
+    revalidatePath("/dashboard")
+    revalidatePath("/dashboard/profile")
 
-  return ok()
-}
+    return ok()
+})
 
-export async function deleteAccount(): Promise<ActionResult> {
-  const user = await getUser()
-  if (!user) return fail("Not authenticated")
+export const deleteAccount = withErrorHandling("deleteAccount", async () => {
+    const user = await getUser()
+    if (!user) return fail("Please sign in to continue.")
 
-  const supabase = await createClient()
-  const { error } = await supabase.rpc("delete_user")
+    const supabase = await createClient()
+    const { error } = await supabase.rpc("delete_user")
 
-  if (error) return fail(error.message)
+    if (error) {
+        logError("deleteAccount", error)
+        return fail(toUserMessage(error))
+    }
 
-  return ok()
-}
+    return ok()
+})

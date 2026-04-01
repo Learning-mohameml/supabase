@@ -6,43 +6,44 @@ import { ok, fail, type ActionResult } from "@/types/actions"
 import type { Json } from "@/types/database.types"
 import type { CreateTodoInput, UpdateTodoInput } from "@/types/helpers"
 import { getUser } from "@/lib/supabase/auth/queries"
+import { toUserMessage, logError, withErrorHandling } from "@/lib/errors"
 
-export async function toggleTodoComplete(
-    id: string,
-    completed: boolean
-): Promise<ActionResult> {
+export const toggleTodoComplete = withErrorHandling("toggleTodoComplete", async (id: string, completed: boolean) => {
     const supabase = await createClient()
     const { error } = await supabase
         .from("todos")
         .update({ completed })
         .eq("id", id)
 
-
-    if (error) return fail(error.message)
+    if (error) {
+        logError("toggleTodoComplete", error)
+        return fail(toUserMessage(error))
+    }
 
     revalidatePath("/dashboard")
     return ok()
-}
+})
 
-export async function softDeleteTodo(id: string): Promise<ActionResult> {
-
+export const softDeleteTodo = withErrorHandling("softDeleteTodo", async (id: string) => {
     const supabase = await createClient()
     const { error } = await supabase
         .from("todos")
         .update({ deleted_at: new Date().toISOString() })
         .eq("id", id)
 
-    if (error) return fail(error.message)
+    if (error) {
+        logError("softDeleteTodo", error)
+        return fail(toUserMessage(error))
+    }
 
     revalidatePath("/dashboard")
     return ok()
+})
 
-}
-
-export async function addTodo(data: CreateTodoInput): Promise<ActionResult> {
+export const addTodo = withErrorHandling("addTodo", async (data: CreateTodoInput) => {
     const supabase = await createClient()
     const user = await getUser()
-    if (!user) return fail("Not authenticated")
+    if (!user) return fail("Please sign in to continue.")
 
     const { error } = await supabase
         .from("todos")
@@ -55,14 +56,17 @@ export async function addTodo(data: CreateTodoInput): Promise<ActionResult> {
             user_id: user.id,
         })
 
-    if (error) return fail(error.message)
+    if (error) {
+        logError("addTodo", error)
+        return fail(toUserMessage(error))
+    }
 
     revalidatePath("/dashboard")
     return ok()
-}
+    
+})
 
-
-export async function updateTodo(id: string, data: UpdateTodoInput): Promise<ActionResult> {
+export const updateTodo = withErrorHandling("updateTodo", async (id: string, data: UpdateTodoInput) => {
     const supabase = await createClient()
     const { error } = await supabase
         .from("todos")
@@ -76,27 +80,32 @@ export async function updateTodo(id: string, data: UpdateTodoInput): Promise<Act
         })
         .eq("id", id)
 
-    if (error) return fail(error.message)
+    if (error) {
+        logError("updateTodo", error)
+        return fail(toUserMessage(error))
+    }
 
-    
     revalidatePath("/dashboard")
     revalidatePath(`/dashboard/todo/${id}`)
     return ok()
-}
+})
 
-export async function addTagToTodo(todoId: string, tagId: string): Promise<ActionResult> {
+export const addTagToTodo = withErrorHandling("addTagToTodo", async (todoId: string, tagId: string) => {
     const supabase = await createClient()
     const { error } = await supabase
         .from("todo_tags")
         .insert({ todo_id: todoId, tag_id: tagId })
 
-    if (error) return fail(error.message)
+    if (error) {
+        logError("addTagToTodo", error)
+        return fail(toUserMessage(error))
+    }
 
     revalidatePath(`/dashboard/todo/${todoId}`)
     return ok()
-}
+})
 
-export async function removeTagFromTodo(todoId: string, tagId: string): Promise<ActionResult> {
+export const removeTagFromTodo = withErrorHandling("removeTagFromTodo", async (todoId: string, tagId: string) => {
     const supabase = await createClient()
     const { error } = await supabase
         .from("todo_tags")
@@ -104,8 +113,11 @@ export async function removeTagFromTodo(todoId: string, tagId: string): Promise<
         .eq("todo_id", todoId)
         .eq("tag_id", tagId)
 
-    if (error) return fail(error.message)
+    if (error) {
+        logError("removeTagFromTodo", error)
+        return fail(toUserMessage(error))
+    }
 
     revalidatePath(`/dashboard/todo/${todoId}`)
     return ok()
-}
+})

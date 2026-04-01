@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "sonner"
+import { toUserMessage } from "@/lib/errors"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -19,9 +20,17 @@ export default function LoginPage() {
       await signInWithMagicLink(email)
       setSent(true)
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Failed to send link")
+      toast.error(toUserMessage(error))
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleLoginWithGoogle = async () => {
+    try {
+      await signInWithGoogle();
+    } catch (error) {
+      toast.error(toUserMessage(error))
     }
   }
 
@@ -101,7 +110,7 @@ export default function LoginPage() {
               <Button
                 className="w-full"
                 variant="outline"
-                onClick={() => signInWithGoogle()}
+                onClick={handleLoginWithGoogle}
               >
                 <svg className="size-4 mr-2" viewBox="0 0 24 24">
                   <path

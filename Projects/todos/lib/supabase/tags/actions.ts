@@ -5,13 +5,12 @@ import { createClient } from "@/lib/supabase/clients/server"
 import { ok, fail, type ActionResult } from "@/types/actions"
 import type { CreateTagInput, UpdateTagInput } from "@/types/helpers"
 import { getUser } from "../auth/queries"
+import { toUserMessage, logError, withErrorHandling } from "@/lib/errors"
 
-
-export async function addTag(data: CreateTagInput): Promise<ActionResult> {
+export const addTag = withErrorHandling("addTag", async (data: CreateTagInput) => {
     const supabase = await createClient()
-    const user = await getUser();
-
-    if (!user) return fail("Not authenticated")
+    const user = await getUser()
+    if (!user) return fail("Please sign in to continue.")
 
     const { error } = await supabase
         .from("tags")
@@ -21,14 +20,17 @@ export async function addTag(data: CreateTagInput): Promise<ActionResult> {
             user_id: user.id,
         })
 
-    if (error) return fail(error.message)
+    if (error) {
+        logError("addTag", error)
+        return fail(toUserMessage(error))
+    }
 
     revalidatePath("/dashboard/tags")
     revalidatePath("/dashboard")
     return ok()
-}
+})
 
-export async function updateTag(id: string, data: UpdateTagInput): Promise<ActionResult> {
+export const updateTag = withErrorHandling("updateTag", async (id: string, data: UpdateTagInput) => {
     const supabase = await createClient()
     const { error } = await supabase
         .from("tags")
@@ -38,23 +40,29 @@ export async function updateTag(id: string, data: UpdateTagInput): Promise<Actio
         })
         .eq("id", id)
 
-    if (error) return fail(error.message)
+    if (error) {
+        logError("updateTag", error)
+        return fail(toUserMessage(error))
+    }
 
     revalidatePath("/dashboard/tags")
     revalidatePath("/dashboard")
     return ok()
-}
+})
 
-export async function deleteTag(id: string): Promise<ActionResult> {
+export const deleteTag = withErrorHandling("deleteTag", async (id: string) => {
     const supabase = await createClient()
     const { error } = await supabase
         .from("tags")
         .delete()
         .eq("id", id)
 
-    if (error) return fail(error.message)
+    if (error) {
+        logError("deleteTag", error)
+        return fail(toUserMessage(error))
+    }
 
     revalidatePath("/dashboard/tags")
     revalidatePath("/dashboard")
     return ok()
-}
+})

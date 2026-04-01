@@ -5,11 +5,12 @@ import { createClient } from "@/lib/supabase/clients/server"
 import { ok, fail, type ActionResult } from "@/types/actions"
 import type { CreateCategoryInput, UpdateCategoryInput } from "@/types/helpers"
 import { getUser } from "@/lib/supabase/auth/queries"
+import { toUserMessage, logError, withErrorHandling } from "@/lib/errors"
 
-export async function addCategory(data: CreateCategoryInput): Promise<ActionResult> {
+export const addCategory = withErrorHandling("addCategory", async (data: CreateCategoryInput) => {
     const supabase = await createClient()
     const user = await getUser()
-    if (!user) return fail("Not authenticated")
+    if (!user) return fail("Please sign in to continue.")
 
     const { error } = await supabase
         .from("categories")
@@ -20,14 +21,17 @@ export async function addCategory(data: CreateCategoryInput): Promise<ActionResu
             user_id: user.id,
         })
 
-    if (error) return fail(error.message)
+    if (error) {
+        logError("addCategory", error)
+        return fail(toUserMessage(error))
+    }
 
     revalidatePath("/dashboard/categories")
     revalidatePath("/dashboard")
     return ok()
-}
+})
 
-export async function updateCategory(id: string, data: UpdateCategoryInput): Promise<ActionResult> {
+export const updateCategory = withErrorHandling("updateCategory", async (id: string, data: UpdateCategoryInput) => {
     const supabase = await createClient()
     const { error } = await supabase
         .from("categories")
@@ -38,23 +42,29 @@ export async function updateCategory(id: string, data: UpdateCategoryInput): Pro
         })
         .eq("id", id)
 
-    if (error) return fail(error.message)
+    if (error) {
+        logError("updateCategory", error)
+        return fail(toUserMessage(error))
+    }
 
     revalidatePath("/dashboard/categories")
     revalidatePath("/dashboard")
     return ok()
-}
+})
 
-export async function deleteCategory(id: string): Promise<ActionResult> {
+export const deleteCategory = withErrorHandling("deleteCategory", async (id: string) => {
     const supabase = await createClient()
     const { error } = await supabase
         .from("categories")
         .delete()
         .eq("id", id)
 
-    if (error) return fail(error.message)
+    if (error) {
+        logError("deleteCategory", error)
+        return fail(toUserMessage(error))
+    }
 
     revalidatePath("/dashboard/categories")
     revalidatePath("/dashboard")
     return ok()
-}
+})

@@ -30,9 +30,14 @@ export async function updateSession(request: NextRequest) {
   )
 
   // Use getUser() (not getSession()) — it validates the JWT with Supabase's server
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  let user = null
+  try {
+    const { data } = await supabase.auth.getUser()
+    user = data.user
+  } catch {
+    // Supabase unreachable (network down, service stopped)
+    // Let the request through — pages/actions will handle the error with friendly messages
+  }
 
   // Redirect unauthenticated users to /login (except public routes)
   if (

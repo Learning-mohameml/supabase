@@ -173,6 +173,82 @@ Replace raw Supabase error messages with user-friendly messages. Add server-side
 - **Pattern matching over exact error codes** — Supabase error formats can vary between versions. Matching on substrings (`"duplicate"`, `"security"`) is more resilient than matching exact codes only.
 - **Top-level try/catch in every action** — safety net for unexpected errors (network failures, runtime exceptions) that wouldn't be caught by the `if (error)` checks.
 
+### Phase F — Testing *(user implements, Claude reviews)*
+
+> **Learning goal:** Error handling is invisible until it breaks. Testing ensures every error path produces the right user-facing message and that no raw database errors leak through.
+
+#### F1. Unit tests for `toUserMessage()`
+
+Create `lib/__tests__/errors.test.ts` using Vitest:
+
+```typescript
+import { describe, it, expect } from "vitest"
+import { toUserMessage } from "../errors"
+
+describe("toUserMessage", () => {
+  // Unique constraint violation (PostgreSQL 23505)
+  it("duplicate / unique → friendly message", () => { ... })
+
+  // RLS violation (PostgreSQL 42501)
+  it("row-level security → permission denied message", () => { ... })
+
+  // Foreign key violation (PostgreSQL 23503)
+  it("foreign key → linked data message", () => { ... })
+
+  // PostgREST no rows (PGRST116)
+  it("PGRST116 → not found message", () => { ... })
+
+  // JWT / session errors
+  it("JWT expired → session expired message", () => { ... })
+
+  // Network errors
+  it("FetchError → connection error message", () => { ... })
+
+  // Auth errors
+  it("not authenticated → sign in message", () => { ... })
+
+  // Unknown errors → generic fallback
+  it("unknown error → generic fallback", () => { ... })
+
+  // Edge cases
+  it("null/undefined → generic fallback", () => { ... })
+  it("plain string → generic fallback", () => { ... })
+})
+```
+
+**Test with various input shapes:**
+- `{ code: "23505", message: "duplicate key..." }` (Supabase error object)
+- `new Error("FetchError: request failed")` (native Error)
+- `"JWT expired"` (plain string)
+- `null`, `undefined`, `42` (unexpected types)
+
+#### F2. Manual smoke tests
+
+Trigger each error scenario in the running app and verify the toast/error boundary shows the correct message:
+
+| # | Scenario | How to trigger | Expected message |
+|---|----------|---------------|-----------------|
+| 1 | Duplicate category | Create two categories with the same name | "This name already exists..." |
+| 2 | Duplicate tag | Create two tags with the same name | "This name already exists..." |
+| 3 | Session expired | Wait for JWT to expire or clear cookies, then perform an action | "Your session has expired..." |
+| 4 | Network failure | Disconnect internet (or stop Supabase), then perform an action | "Connection error..." |
+| 5 | Not found (deleted item) | Open a todo detail page, delete the todo from SQL editor, click "Save" | "The item was not found..." |
+| 6 | OAuth failure | Temporarily break the Google redirect URI, try to log in | Toast shows error on login page |
+| 7 | Unknown error | Throw a random error in a server action (temporary) | "Something went wrong..." |
+
+#### F3. RLS isolation verification
+
+Test that RLS violations produce friendly messages (not raw policy errors):
+
+```sql
+-- In SQL editor: try to insert a todo with a different user's ID
+-- This should be blocked by RLS and the app should show "You don't have permission"
+```
+
+1. Log in as Alice
+2. Use browser DevTools to manually call a server action with Bob's `user_id`
+3. Verify toast shows "You don't have permission to do this." (not the raw policy error)
+
 ---
 
 ## Done Criteria
@@ -184,3 +260,6 @@ Replace raw Supabase error messages with user-friendly messages. Add server-side
 - [ ] Global error boundary catches unexpected errors at root level
 - [ ] Custom 404 page
 - [ ] OAuth errors shown via toast on login page
+- [ ] Unit tests for `toUserMessage()` pass (all known patterns + edge cases)
+- [ ] Manual smoke tests pass (all 7 scenarios verified)
+- [ ] RLS violation shows friendly message, not raw policy error

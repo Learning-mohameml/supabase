@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/clients/server"
 import type { Tag } from "@/types/helpers"
 import { getUser } from "@/lib/supabase/auth/queries"
+import { toUserMessage, logError } from "@/lib/errors"
 
 export async function getTags() : Promise<Tag[]> {
     const supabase = await createClient()
@@ -13,7 +14,10 @@ export async function getTags() : Promise<Tag[]> {
         .eq("user_id", user.id)
         .order("name")
 
-    if(error) throw new Error(error.message)
+    if (error) {
+        logError("getTags", error)
+        throw new Error(toUserMessage(error))
+    }
 
     return data as Tag[]
 }
@@ -33,7 +37,10 @@ export async function getTagsWithTodoCount(): Promise<TagWithTodoCount[]> {
         .eq("user_id", user.id)
         .order("name")
 
-    if (error) throw new Error(error.message)
+    if (error) {
+        logError("getTagsWithTodoCount", error)
+        throw new Error(toUserMessage(error))
+    }
 
     return data
 }
