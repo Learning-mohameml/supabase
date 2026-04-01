@@ -9,6 +9,14 @@
 - make a production profosneille error handling 
 - look at todos/tasks/error-handling.md 
 
+## User Management : 
+- enhance user management by creating an new tables in public schema : profiles
+- profiles use auth.users
+- create a trigger that popultae auto when a user auth 
+- in code we user profile to read/update user prfernces/profile ...etc 
+- we update auth.usees only for things related to auth like email ...etc 
+- make a view that can be public see by another 
+
 ## Chapter 06 — Production, CI/CD & DevOps
 - [ ] Write course material (Git workflow, GitHub Actions, environments, CI/CD pipelines)
 - [ ] Add linting & type-check CI pipeline
