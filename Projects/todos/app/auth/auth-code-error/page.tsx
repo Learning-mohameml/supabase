@@ -1,6 +1,5 @@
 import { AlertTriangle } from "lucide-react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function AuthErrorPage() {
@@ -17,9 +16,12 @@ export default function AuthErrorPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Button asChild className="w-full">
-            <Link href="/login">Back to login</Link>
-          </Button>
+          <Link
+            href="/login"
+            className="inline-flex h-8 w-full items-center justify-center rounded-lg bg-primary px-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Back to login
+          </Link>
         </CardContent>
       </Card>
     </main>

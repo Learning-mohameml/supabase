@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 import type { Category, Tag, TodoWithRelations, UpdateTodoInput } from "@/types/helpers"
 import type { ActionResult } from "@/types/actions"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { TodoEditForm } from "@/components/todos/todo-edit-form"
 import { TagPicker } from "@/components/todos/tag-picker"
@@ -86,10 +86,13 @@ export function TodoDetail({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <Button variant="ghost" size="sm" render={<Link href="/dashboard" />}>
+        <Link
+          href="/dashboard"
+          className={buttonVariants({ variant: "ghost", size: "sm" })}
+        >
           <ArrowLeft className="size-4 mr-1" />
           Back
-        </Button>
+        </Link>
         <Button variant="outline" size="sm" onClick={() => setEditing(true)}>
           <Pencil className="size-4 mr-1" />
           Edit

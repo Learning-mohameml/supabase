@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import { getUser } from "@/lib/supabase/auth/queries"
 import { createClient } from "@/lib/supabase/clients/server"
-import { fail, ok, type ActionResult } from "@/types/actions"
+import { fail, ok } from "@/types/actions"
 import type { UpdateProfileInput } from "@/types/helpers"
 import { toUserMessage, logError, withErrorHandling } from "@/lib/errors"
 

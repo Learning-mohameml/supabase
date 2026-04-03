@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { createClient } from "@/lib/supabase/clients/server"
-import { ok, fail, type ActionResult } from "@/types/actions"
+import { ok, fail } from "@/types/actions"
 import type { CreateTagInput, UpdateTagInput } from "@/types/helpers"
 import { getUser } from "../auth/queries"
 import { toUserMessage, logError, withErrorHandling } from "@/lib/errors"

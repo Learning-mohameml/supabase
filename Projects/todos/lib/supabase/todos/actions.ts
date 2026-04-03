@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { createClient } from "@/lib/supabase/clients/server"
-import { ok, fail, type ActionResult } from "@/types/actions"
+import { ok, fail } from "@/types/actions"
 import type { Json } from "@/types/database.types"
 import type { CreateTodoInput, UpdateTodoInput } from "@/types/helpers"
 import { getUser } from "@/lib/supabase/auth/queries"

@@ -6,8 +6,9 @@
 - [x] Test RLS policies locally
 
 ## 2. Error Handling : 
-- make a production profosneille error handling 
-- look at todos/tasks/07-error-handling.md 
+- [x]make a production profosneille error handling 
+- [x]look at todos/tasks/07-error-handling.md 
+- [x]manula test for error handling 
 
 
 ## 3. Chapter 06 — Production, CI/CD & DevOps
@@ -18,6 +19,7 @@
 ### 3.2 Testing : 
 - [ ] Add linting & type-check CI pipeline
 - [ ] Add unit tests (Vitest)
+- [] Testing db schema and RLS with pg-TAP
 - [ ] Add integration tests (database, API)
 - [ ] Add E2E tests (Playwright)
 

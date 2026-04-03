@@ -1,6 +1,7 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { toUserMessage } from "@/lib/errors"
 import Link from "next/link"
 
 export default function DashboardError({
@@ -14,13 +15,13 @@ export default function DashboardError({
     <div className="flex flex-col items-center justify-center gap-4 py-16">
       <h2 className="text-xl font-semibold">Something went wrong</h2>
       <p className="text-muted-foreground text-center max-w-md">
-        {error.message || "Failed to load your data. Please try again."}
+        {toUserMessage(error)}
       </p>
       <div className="flex gap-3">
         <Button onClick={reset}>Try again</Button>
-        <Button variant="outline" asChild>
-          <Link href="/dashboard">Go to Dashboard</Link>
-        </Button>
+        <Link href="/dashboard" className={buttonVariants({ variant: "outline" })}>
+          Go to Dashboard
+        </Link>
       </div>
     </div>
   )
