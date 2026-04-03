@@ -8,7 +8,7 @@
 ## 2. Error Handling : 
 - [x]make a production profosneille error handling 
 - [x]look at todos/tasks/07-error-handling.md 
-- [x]manula test for error handling 
+- [x]manual test for error handling 
 
 
 ## 3. Chapter 06 — Production, CI/CD & DevOps
@@ -17,14 +17,14 @@
 - [ ] Write course material (Git workflow, GitHub Actions, environments, CI/CD pipelines)
 
 ### 3.2 Testing : 
-- [ ] Add linting & type-check CI pipeline
-- [ ] Add unit tests (Vitest)
-- [] Testing db schema and RLS with pg-TAP
-- [ ] Add integration tests (database, API)
-- [ ] Add E2E tests (Playwright)
+- [x] Add linting & type-check CI pipeline
+- [x] Add unit tests (Vitest)
+- [x] Testing db schema and RLS with pg-TAP
+- [x] Add integration tests (database, API)
+- [x] Add E2E tests (Playwright)
 
 ### 3.4 Automation CI/CS : 
-- [ ] Add GitHub Actions workflows to todos app
+- [x] Add GitHub Actions workflows to todos app
 - [ ] Add migration deploy pipeline (supabase db push on merge)
 - [ ] Add type generation in CI
 - [ ] Add secrets management

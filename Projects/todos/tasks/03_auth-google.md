@@ -53,7 +53,7 @@ Make Google OAuth fully functional with the local Supabase stack. Replace all ha
 
 - [x] **B2.** Verify `.gitignore` covers `supabase/.env` (`.env*` on line 34 already matches)
 
-- x ] **B3.** Fix `config.toml` line 152 — `additional_redirect_urls`:
+- [x] **B3.** Fix `config.toml` line 152 — `additional_redirect_urls`:
   ```diff
   - additional_redirect_urls = ["https://127.0.0.1:3000"]
   + additional_redirect_urls = ["http://localhost:3000/auth/callback"]
